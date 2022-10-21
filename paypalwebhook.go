@@ -35,18 +35,18 @@ ClientID, Secret ID etc. are all passed from paypalwebhook/secrets.go.
 
 To pass these directly, call `GetPayPalClientWith` instead.
 */
-func GetPayPalClient() (*paypal.Client, time.Time) {
-	if clientID==""{
-		panic(errors.New("\033[31mError: PayPal Client ID is undefined.\n\033[0m"+packageSecretsError))
-	} else if secretID==""{
-		panic(errors.New("\033[31mError: PayPal Secret is undefined.\n\033[0m"+packageSecretsError))
-	} else if apiMode==""{
-		panic(errors.New("\033[31mError: PayPal API Mode is undefined.\n\033[0m"+packageSecretsError))
-	} else if webhookID==""{
-		panic(errors.New("\033[31mError: PayPal Webhook ID is undefined.\n\033[0m"+packageSecretsError))
-	}
-	return GetPayPalClientWith(clientID,secretID,apiMode,webhookID)
-}
+// func GetPayPalClient() (*paypal.Client, time.Time) {
+// 	if wk.clientID==""{
+// 		panic(errors.New("\033[31mError: PayPal Client ID is undefined.\n\033[0m"+packageSecretsError))
+// 	} else if wk.secretID==""{
+// 		panic(errors.New("\033[31mError: PayPal Secret is undefined.\n\033[0m"+packageSecretsError))
+// 	} else if wk.apiMode==""{
+// 		panic(errors.New("\033[31mError: PayPal API Mode is undefined.\n\033[0m"+packageSecretsError))
+// 	} else if wk.webhookID==""{
+// 		panic(errors.New("\033[31mError: PayPal Webhook ID is undefined.\n\033[0m"+packageSecretsError))
+// 	}
+// 	return GetPayPalClientWith(wk.clientID,wk.secretID,wk.apiMode,wk.webhookID)
+// }
 
 /*
 Returns a Paypal Client for making requests to the PayPal API, and a timestamp for when to renew its access token.
@@ -54,14 +54,14 @@ Takes as input four strings: `clientID`, `secretID`, `apiMode` and `webhookID`.
 
 To pass these directly, call `GetPayPalClientWith` instead.
 */
-func GetPayPalClientWith(clientID string,secretID string, apiMode string ,webhookID string) (*paypal.Client, time.Time) {
+func GetPayPalClientWith(clientID string,secret string, apiMode string ,webhookID string) (*paypal.Client, time.Time) {
 
 	log.Print("\033[32mGenerating new Access Token for PayPal REST API...\033[0m")
 	log.Print("\033[33mPlease remember to update \033[35mclient/secretID in secrets.go\033[33m \033[1;33mand to swap\033[0m\033[33m \033[35mpaypal.APIBaseSandBox\033[33m with \033[35mpaypal.APIBaseLive\033[33m before going live.\033[0m\n")
 	//var t *paypal.TokenResponse;
 
 	//Get a new PayPal client
-    c, err := paypal.NewClient(clientID, secretID, apiMode)
+    c, err := paypal.NewClient(clientID, secret, apiMode)
     if(err != nil) {panic(err)}
 
 	//Update access token in the future using checkAccessTokenRenewalTime()
@@ -152,7 +152,7 @@ func verifyPaypalEvent(c *paypal.Client, r *http.Request, whID string, event_id 
 	if(err != nil) {return false, err}
 
 	log.Print("\033[33mVerifying Webhook Event: ", event_id, "...\033[0m")
-	status, err_verifywebhook := c.VerifyWebhookSignature(context.Background(),r,webhookID)
+	status, err_verifywebhook := c.VerifyWebhookSignature(context.Background(),r,whID)
 	if(err_verifywebhook != nil) {return false, err_verifywebhook}
 
 	//CHECK IF STATUS IS SUCCESS OR FAILUREx

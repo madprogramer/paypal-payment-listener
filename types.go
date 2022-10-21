@@ -22,4 +22,13 @@ type (
 		Links                     []paypal.Link                     `json:"links,omitempty"`
 	}
 
+	// //Webhook Keys
+	// WebhookKeys struct {  
+	//     clientID  string
+	//     secretID  string
+	//     webhookID string
+	//     apiMode string //= paypal.APIBaseLive
+ //    }
+
+
 )
