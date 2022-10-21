@@ -235,7 +235,7 @@ func PaypalWebhook(c *paypal.Client, w http.ResponseWriter, r *http.Request,
 		    	//TODO: ADD CALLBACK TO AN ACTUAL DB SYSTEM BASED ON RETURN VALUE
 
 				//log.Print("Database Info:", db)
-				balance_update_function(params)
+				balance_update_function(account,amount,params)
 
 				// balance_update_function(db, account, amount)
 				// Now := time.Now().UTC().Format("2006-01-02 15:04:05.000000")
