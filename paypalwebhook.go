@@ -29,8 +29,9 @@ Takes as input four strings: `clientID`, `secretID`, `apiMode` and `webhookID`.
 func GetPayPalClient(clientID string,secret string, apiMode string ,webhookID string) (*paypal.Client, time.Time) {
 
 	// Assertions go here
-	if apiMode!=paypal.APIBaseLive && apiMode!=paypal.APIBaseSandBox {
-			panic(errors.New("\033[31mError: PayPal API Mode should be one of `paypal.APIBaseLive` or `paypal.APIBaseSandBox`.\n\033[0m"))}
+	// if apiMode!=paypal.APIBaseLive && apiMode!=paypal.APIBaseSandBox {
+	// 	panic(errors.New("\033[31mError: PayPal API Mode should be one of `paypal.APIBaseLive` or `paypal.APIBaseSandBox`.\n\033[0m"))
+	// }
 	// 	} else if secretID==""{
 	// 		panic(errors.New("\033[31mError: PayPal Secret is undefined.\n\033[0m"))
 	// 	} else if clientID==""{
